@@ -1,5 +1,6 @@
 import { theme } from '../theme';
 import { templates } from '../templates';
+import { InstallButton } from './InstallButton';
 
 export function TemplatePicker({ onPick }: { onPick: (id: string) => void }) {
   return (
@@ -11,6 +12,7 @@ export function TemplatePicker({ onPick }: { onPick: (id: string) => void }) {
           <p>Kies een template om te beginnen</p>
         </div>
       </header>
+      <InstallButton />
       <main className="grid">
         {templates.map((t) => (
           <button key={t.id} className="tile" onClick={() => onPick(t.id)}>

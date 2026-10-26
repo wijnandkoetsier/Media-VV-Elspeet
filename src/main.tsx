@@ -10,6 +10,9 @@ import '@fontsource/inter/600.css';
 import '@fontsource/inter/700.css';
 import './styles.css';
 import { App } from './App';
+import { initInstall } from './install';
+
+initInstall();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
