@@ -877,3 +877,113 @@ input[type='range'] {
 .install-steps li + li {
   margin-top: 6px;
 }
+
+/* ---------- Volledig scherm ---------- */
+.canvas {
+  cursor: zoom-in;
+}
+
+.preview-expand {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  backdrop-filter: blur(6px);
+}
+
+.viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #000;
+  overscroll-behavior: contain;
+}
+
+.viewer-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.viewer-img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-width: none;
+  transform-origin: center;
+  will-change: transform;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+.viewer-img.animate {
+  transition: transform 0.2s ease-out;
+}
+
+.viewer-close {
+  position: absolute;
+  top: calc(env(safe-area-inset-top) + 12px);
+  right: 12px;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(40, 40, 40, 0.85);
+  color: #fff;
+  font-size: 20px;
+}
+
+.viewer-bar {
+  position: absolute;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom) + 18px);
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(40, 40, 40, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+.viewer-bar button {
+  min-width: 48px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.viewer-bar button:disabled {
+  opacity: 0.35;
+}
+
+.viewer-bar .viewer-level {
+  min-width: 72px;
+  font-size: 15px;
+}
+
+.viewer-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(env(safe-area-inset-top) + 24px);
+  margin: 0;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  pointer-events: none;
+}
