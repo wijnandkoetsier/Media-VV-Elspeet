@@ -24,7 +24,7 @@ export async function shareCanvas(canvas: HTMLCanvasElement, name: string): Prom
   const blob = await toBlob(canvas);
   const file = new File([blob], name, { type: 'image/png' });
   try {
-    await navigator.share({ files: [file], title: 'VV Elspeet' });
+    await navigator.share({ files: [file], title: 'Media VV Elspeet' });
     return 'shared';
   } catch (e) {
     if (e instanceof DOMException && e.name === 'AbortError') return 'cancelled';
