@@ -32,6 +32,9 @@ Dubbele uploads worden herkend en niet twee keer opgeslagen.
 
 Ingevulde gegevens worden automatisch op het toestel bewaard per template (knop **Reset** wist ze).
 
+**Volledig scherm:** tik op het voorbeeld (of op ⛶) om de creatie schermvullend te bekijken. Knijp, tik twee keer
+of gebruik + / − om in te zoomen (tot 600%), sleep om te verschuiven. Sluiten met ✕ of de terugknop.
+
 **Exporteren:** op de telefoon opent *Delen / opslaan* het deelmenu (Opslaan in Foto's, Instagram, WhatsApp…).
 *Download PNG* slaat het bestand direct op.
 

@@ -5,6 +5,7 @@ import { clearDraft, loadDraft, saveDraft } from '../storage';
 import { baseDesign, type Design, type FieldValue, type ImageValue, type TemplateData, type TemplateDef } from '../templates/types';
 import { DesignPanel } from './DesignPanel';
 import { FieldInput } from './FieldInput';
+import { FullscreenViewer } from './FullscreenViewer';
 
 type Tab = 'inhoud' | 'fotos' | 'ontwerp';
 
@@ -20,6 +21,7 @@ export function Editor({ tpl, onBack }: { tpl: TemplateDef; onBack: () => void }
   const [images, setImages] = useState<Record<string, HTMLImageElement | undefined>>({});
   const [tab, setTab] = useState<Tab>('inhoud');
   const [status, setStatus] = useState('');
+  const [fullscreen, setFullscreen] = useState(false);
   const shareable = useMemo(canShareFiles, []);
 
   const imageFields = tpl.fields.filter((f) => f.type === 'image');
@@ -127,9 +129,22 @@ export function Editor({ tpl, onBack }: { tpl: TemplateDef; onBack: () => void }
       </header>
 
       <div className="preview">
-        <canvas ref={canvasRef} className={`canvas canvas-${design.format}`} />
+        <canvas
+          ref={canvasRef}
+          className={`canvas canvas-${design.format}`}
+          onClick={() => ready && setFullscreen(true)}
+          title="Tik om op volledig scherm te bekijken"
+        />
         {!ready && <div className="preview-loading">Laden…</div>}
+        {ready && (
+          <button className="preview-expand" onClick={() => setFullscreen(true)} aria-label="Volledig scherm">
+            ⛶
+          </button>
+        )}
       </div>
+      {fullscreen && canvasRef.current && (
+        <FullscreenViewer canvas={canvasRef.current} onClose={() => setFullscreen(false)} />
+      )}
 
       <nav className="tabs">
         <button className={tab === 'inhoud' ? 'active' : ''} onClick={() => setTab('inhoud')}>
