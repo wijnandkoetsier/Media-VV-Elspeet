@@ -1,7 +1,9 @@
 import { useId, useState } from 'react';
 import type { ImageField, ImageValue } from '../templates/types';
 import { removeBackground } from '../bgremove';
+import { addToGallery } from '../gallery';
 import { fileToDataUrl } from '../upload';
+import { GalleryPicker } from './Gallery';
 
 interface Props {
   field: ImageField;
@@ -14,6 +16,7 @@ export function ImageInput({ field, value, onChange }: Props) {
   const [busy, setBusy] = useState(false);
   const [removing, setRemoving] = useState(false);
   const [error, setError] = useState('');
+  const [picking, setPicking] = useState(false);
 
   async function onFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -24,6 +27,7 @@ export function ImageInput({ field, value, onChange }: Props) {
     try {
       const src = await fileToDataUrl(file, !!field.alpha);
       onChange({ src, zoom: 1, x: 0.5, y: 0.5 });
+      addToGallery(src, file.name);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Uploaden mislukt');
     } finally {
@@ -40,6 +44,7 @@ export function ImageInput({ field, value, onChange }: Props) {
     try {
       const src = await removeBackground(value.src);
       onChange({ ...value, src, original: value.src });
+      addToGallery(src, 'Zonder achtergrond');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Achtergrond verwijderen mislukt');
     } finally {
@@ -62,6 +67,9 @@ export function ImageInput({ field, value, onChange }: Props) {
             {busy ? 'Bezig…' : value ? 'Vervangen' : 'Kies afbeelding'}
           </label>
           <input id={id} type="file" accept="image/*" onChange={onFile} hidden />
+          <button className="btn" onClick={() => setPicking(true)}>
+            🖼️ Galerij
+          </button>
           {value && (
             <button className="btn btn-ghost" onClick={() => onChange(null)}>
               Verwijderen
@@ -84,6 +92,16 @@ export function ImageInput({ field, value, onChange }: Props) {
         </div>
       )}
       {error && <p className="error">{error}</p>}
+      {picking && (
+        <GalleryPicker
+          preferTransparent={field.alpha}
+          onClose={() => setPicking(false)}
+          onPick={(src) => {
+            onChange({ src, zoom: 1, x: 0.5, y: 0.5 });
+            setPicking(false);
+          }}
+        />
+      )}
       {value && !field.alpha && (
         <div className="sliders">
           <Slider

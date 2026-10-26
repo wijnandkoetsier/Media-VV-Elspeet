@@ -22,6 +22,14 @@ export function TemplatePicker({ onPick }: { onPick: (id: string) => void }) {
           </button>
         ))}
       </main>
+      <button className="gallery-link" onClick={() => onPick('galerij')}>
+        <span aria-hidden>🖼️</span>
+        <span>
+          <strong>Galerij</strong>
+          <small>Alle geüploade foto's en logo's bekijken, toevoegen of opruimen</small>
+        </span>
+        <span aria-hidden>→</span>
+      </button>
     </div>
   );
 }
