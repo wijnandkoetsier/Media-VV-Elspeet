@@ -4,11 +4,13 @@ import type { Palette, Variant } from '../theme';
 export interface ImageValue {
   /** dataURL van de (verkleinde) upload. */
   src: string;
-  /** 1 = vullend, hoger = inzoomen. */
+  /** 1 = vullend, hoger = inzoomen, lager = uitzoomen (er komt dan achtergrond rondom). */
   zoom: number;
   /** Focuspunt 0..1 (0 = links/boven). */
   x: number;
   y: number;
+  /** Origineel van vóór het verwijderen van de achtergrond, om terug te kunnen zetten. */
+  original?: string;
 }
 
 interface BaseField {

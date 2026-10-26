@@ -16,6 +16,18 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
         // Alleen Latijnse lettertekens offline bewaren; andere schriften zijn niet nodig.
         globIgnores: ['**/*cyrillic*', '**/*greek*', '**/*vietnamese*'],
+        // Het model voor achtergrond verwijderen na de eerste keer bewaren.
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/(cdn\.jsdelivr\.net\/npm\/@mediapipe|storage\.googleapis\.com\/mediapipe-models)\//,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'bg-remove-model',
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 90 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+        ],
       },
       manifest: {
         name: 'Media VV Elspeet',
