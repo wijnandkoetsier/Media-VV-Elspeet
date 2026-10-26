@@ -31,7 +31,7 @@ export default defineConfig({
       },
       manifest: {
         name: 'Media VV Elspeet',
-        short_name: 'VV Elspeet',
+        short_name: 'Media VV Elspeet',
         description: 'Maak snel social media afbeeldingen voor VV Elspeet.',
         lang: 'nl',
         theme_color: '#111111',
