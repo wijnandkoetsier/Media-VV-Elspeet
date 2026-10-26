@@ -32,6 +32,9 @@ Dubbele uploads worden herkend en niet twee keer opgeslagen.
 
 Ingevulde gegevens worden automatisch op het toestel bewaard per template (knop **Reset** wist ze).
 
+**Meer ruimte voor invoer:** veeg de greep boven de tabbladen omhoog om de invoervelden over het hele scherm te tonen,
+en omlaag om het voorbeeld terug te halen. Tikken op de greep wisselt ook.
+
 **Volledig scherm:** tik op het voorbeeld (of op ⛶) om de creatie schermvullend te bekijken. Knijp, tik twee keer
 of gebruik + / − om in te zoomen (tot 600%), sleep om te verschuiven. Sluiten met ✕ of de terugknop.
 

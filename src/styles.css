@@ -178,7 +178,23 @@ button {
   padding: 12px;
   height: 40dvh;
   min-height: 220px;
+  overflow: hidden;
   background: repeating-conic-gradient(#141414 0 25%, #191919 0 50%) 0 0 / 20px 20px;
+  transition:
+    height 0.25s ease,
+    min-height 0.25s ease,
+    padding 0.25s ease;
+}
+
+.preview.collapsed {
+  height: 0;
+  min-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.preview.dragging {
+  transition: none;
 }
 
 .canvas {
@@ -986,4 +1002,46 @@ input[type='range'] {
   color: rgba(255, 255, 255, 0.6);
   font-size: 13px;
   pointer-events: none;
+}
+
+/* ---------- Sleepgreep invoer ---------- */
+.sheet-handle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0 6px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-radius: 16px 16px 0 0;
+  margin-top: -8px;
+  position: relative;
+  z-index: 1;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.sheet-grip {
+  width: 44px;
+  height: 5px;
+  border-radius: 3px;
+  background: #555;
+}
+
+.sheet-label {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
+
+@media (min-width: 900px) {
+  .sheet-handle {
+    display: none;
+  }
+  .preview.collapsed {
+    height: auto;
+    padding: 12px;
+  }
 }
