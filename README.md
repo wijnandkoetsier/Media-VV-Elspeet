@@ -57,6 +57,10 @@ npm run preview   # bekijk de build
 
 ## Online zetten (GitHub Pages)
 
+Op het startscherm van de app staat een knop **App installeren**. Op Android (Chrome, Samsung Internet) opent die
+direct het installatievenster; op iPhone of in andere browsers toont hij stap-voor-stap uitleg. Is de app al
+geïnstalleerd, dan verdwijnt de knop.
+
 De workflow `.github/workflows/deploy.yml` bouwt en publiceert de app bij elke push naar `main`.
 Eenmalig instellen: **Settings → Pages → Source: GitHub Actions**.
 Open daarna de URL op je telefoon en kies *Zet op beginscherm* om de app te installeren.
