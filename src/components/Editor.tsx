@@ -32,7 +32,10 @@ export function Editor({ tpl, onBack }: { tpl: TemplateDef; onBack: () => void }
       if (!alive) return;
       if (draft) {
         setData({ ...tpl.defaults, ...draft.data });
-        setDesign({ ...initialDesign(tpl), ...draft.design });
+        const merged = { ...initialDesign(tpl), ...draft.design };
+        // Oude concepten kunnen een kleurstijl hebben die niet meer bestaat.
+        if (!['primary', 'secondary', 'gold'].includes(merged.variant)) merged.variant = 'primary';
+        setDesign(merged);
       }
       setLoaded(true);
     });

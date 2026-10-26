@@ -4,9 +4,9 @@ import type { Design } from '../templates/types';
 import { Slider } from './ImageInput';
 
 const variants: { id: Variant; label: string }[] = [
-  { id: 'primary', label: 'Club' },
-  { id: 'secondary', label: 'Licht' },
-  { id: 'dark', label: 'Donker' },
+  { id: 'primary', label: 'Zwart' },
+  { id: 'secondary', label: 'Wit' },
+  { id: 'gold', label: 'Goud' },
 ];
 
 export function DesignPanel({ design, onChange }: { design: Design; onChange: (d: Design) => void }) {

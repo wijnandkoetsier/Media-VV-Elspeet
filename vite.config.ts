@@ -11,7 +11,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['logo.svg', 'icons/*.png'],
+      includeAssets: ['logo.png', 'icons/*.png'],
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
         // Alleen Latijnse lettertekens offline bewaren; andere schriften zijn niet nodig.
@@ -22,8 +22,8 @@ export default defineConfig({
         short_name: 'VV Elspeet',
         description: 'Maak snel social media afbeeldingen voor VV Elspeet.',
         lang: 'nl',
-        theme_color: '#0b5d2e',
-        background_color: '#0f1512',
+        theme_color: '#111111',
+        background_color: '#0e0e0e',
         display: 'standalone',
         orientation: 'portrait',
         start_url: '.',

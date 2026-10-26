@@ -177,19 +177,12 @@ export function patternBackground(rc: RenderContext) {
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, W, H);
 
+  // Subtiele verticale banen, als de streep in het clublogo
   ctx.save();
-  ctx.globalAlpha = 0.07;
+  ctx.globalAlpha = 0.045;
   ctx.fillStyle = pal.fg;
-  const step = 90;
-  for (let i = -H; i < W + H; i += step) {
-    ctx.beginPath();
-    ctx.moveTo(i, 0);
-    ctx.lineTo(i + 34, 0);
-    ctx.lineTo(i + 34 - H * 0.6, H);
-    ctx.lineTo(i - H * 0.6, H);
-    ctx.closePath();
-    ctx.fill();
-  }
+  const band = W / 9;
+  for (let x = band; x < W; x += band * 2) ctx.fillRect(x, 0, band, H);
   ctx.restore();
 
   // Accentbalk rechtsboven

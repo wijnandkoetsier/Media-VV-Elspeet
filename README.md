@@ -17,7 +17,7 @@ Kies een template, vul de gegevens in, upload foto's, pas het ontwerp aan en exp
 
 Elk template heeft een tab **Ontwerp** met:
 - formaat: Post 4:5 (1080×1350), Vierkant (1080×1080), Story 9:16 (1080×1920)
-- kleurstijl: Club / Licht / Donker
+- kleurstijl: Zwart / Wit / Goud
 - donkere laag over foto's, tekstgrootte, clublogo aan/uit
 
 Bij foto's kun je inzoomen en de uitsnede verschuiven.
@@ -28,12 +28,12 @@ Ingevulde gegevens worden automatisch op het toestel bewaard per template (knop 
 
 ## Huisstijl aanpassen
 
-De kleuren en het logo zijn nu **placeholders**:
+De huisstijl staat op één plek:
 
-- **Logo:** vervang `public/logo.svg` door het echte clublogo
-  (een PNG kan ook: zet het in `public/logo.png` en wijzig `logoUrl` in `src/theme.ts`).
-- **Kleuren:** pas `colors` aan in `src/theme.ts`. Werk ook `--primary`/`--accent` in `src/styles.css`
-  en `theme_color` in `vite.config.ts` bij voor de app zelf.
+- **Logo:** `public/logo.png` (clublogo met transparante achtergrond).
+- **Kleuren:** zwart en wit als basis, met goud (`#e0b32a`) als accent. Aan te passen via `colors` in
+  `src/theme.ts`; voor de app zelf ook `--accent` in `src/styles.css` en `theme_color` in `vite.config.ts`.
+- **Kleurstijlen** in de app: *Zwart* (standaard), *Wit* en *Goud*.
 - **App-iconen:** vervang `public/icons/icon-192.png` en `icon-512.png`.
 - **Hashtag onderaan:** `footer` in `src/theme.ts` (leeg = verbergen).
 

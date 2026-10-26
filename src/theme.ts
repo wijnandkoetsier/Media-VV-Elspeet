@@ -7,16 +7,17 @@
 export const theme = {
   clubName: 'VV Elspeet',
   /** Pad (relatief t.o.v. de app) naar het clublogo. */
-  logoUrl: 'logo.svg',
+  logoUrl: 'logo.png',
   /** Tekst onderaan elke afbeelding, leeg laten om te verbergen. */
   footer: '#vvelspeet',
   colors: {
-    primary: '#0b5d2e', // TODO: hoofdkleur club
-    primaryDark: '#063a1c',
-    secondary: '#ffffff', // TODO: tweede clubkleur
-    accent: '#f5c400', // TODO: accentkleur
-    dark: '#0f1512',
-    light: '#f4f6f4',
+    primary: '#161616', // clubkleur zwart (iets zachter dan puur zwart)
+    primaryDark: '#050505',
+    secondary: '#ffffff', // clubkleur wit
+    accent: '#e0b32a', // goud als accent, zodat het niet alleen zwart-wit is
+    accentDark: '#c39516',
+    dark: '#111111',
+    light: '#f5f5f3',
   },
   fonts: {
     heading: 'Anton',
@@ -25,7 +26,7 @@ export const theme = {
   },
 };
 
-export type Variant = 'primary' | 'secondary' | 'dark';
+export type Variant = 'primary' | 'secondary' | 'gold';
 
 export interface Palette {
   bg: string;
@@ -45,40 +46,43 @@ export interface Palette {
 export function palette(variant: Variant): Palette {
   const c = theme.colors;
   switch (variant) {
+    // Wit: lichte achtergrond, zwarte kaarten, goud in de details
     case 'secondary':
       return {
         bg: c.light,
-        bg2: '#dfe6e1',
-        fg: c.primaryDark,
-        accent: c.primary,
-        accentOnPhoto: '#ffffff',
-        accentFg: '#ffffff',
-        muted: 'rgba(6,58,28,0.7)',
-        card: c.primary,
-        cardFg: '#ffffff',
-      };
-    case 'dark':
-      return {
-        bg: c.dark,
-        bg2: '#1c2620',
-        fg: '#ffffff',
-        accent: c.accent,
+        bg2: '#e1e1dc',
+        fg: c.dark,
+        accent: c.dark,
         accentOnPhoto: c.accent,
-        accentFg: c.dark,
-        muted: 'rgba(255,255,255,0.72)',
-        card: 'rgba(255,255,255,0.08)',
+        accentFg: '#ffffff',
+        muted: 'rgba(17,17,17,0.68)',
+        card: c.dark,
         cardFg: '#ffffff',
       };
+    // Goud: opvallende variant voor bijv. uitslagen of sponsors
+    case 'gold':
+      return {
+        bg: c.accent,
+        bg2: c.accentDark,
+        fg: c.dark,
+        accent: c.dark,
+        accentOnPhoto: c.accent,
+        accentFg: c.accent,
+        muted: 'rgba(17,17,17,0.72)',
+        card: 'rgba(17,17,17,0.88)',
+        cardFg: '#ffffff',
+      };
+    // Zwart: standaard clubstijl
     default:
       return {
-        bg: c.primary,
+        bg: '#1f1f1f',
         bg2: c.primaryDark,
         fg: '#ffffff',
         accent: c.accent,
         accentOnPhoto: c.accent,
         accentFg: c.dark,
-        muted: 'rgba(255,255,255,0.78)',
-        card: 'rgba(0,0,0,0.28)',
+        muted: 'rgba(255,255,255,0.75)',
+        card: 'rgba(255,255,255,0.09)',
         cardFg: '#ffffff',
       };
   }
