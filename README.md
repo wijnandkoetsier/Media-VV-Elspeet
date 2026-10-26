@@ -24,6 +24,12 @@ Bij foto's kun je in- en uitzoomen (0,3× tot 3×) en de uitsnede verschuiven.
 Met **Achtergrond verwijderen** wordt de achtergrond rond personen weggehaald (werkt op het toestel zelf
 met MediaPipe; het model van ±16 MB wordt de eerste keer gedownload en daarna bewaard).
 Met **Achtergrond terugzetten** krijg je de originele foto terug.
+**Galerij:** elke geüploade afbeelding (en elke foto waarvan de achtergrond is verwijderd) wordt automatisch
+bewaard in de galerij op het toestel. Bij elk afbeeldingsveld kies je via **🖼️ Galerij** snel een eerdere afbeelding;
+bij logo-velden staan transparante afbeeldingen meteen bovenaan. Via **Galerij** op het startscherm kun je meerdere
+afbeeldingen tegelijk toevoegen (bijv. logo's van tegenstanders), zoeken op naam, hernoemen en verwijderen.
+Dubbele uploads worden herkend en niet twee keer opgeslagen.
+
 Ingevulde gegevens worden automatisch op het toestel bewaard per template (knop **Reset** wist ze).
 
 **Exporteren:** op de telefoon opent *Delen / opslaan* het deelmenu (Opslaan in Foto's, Instagram, WhatsApp…).
