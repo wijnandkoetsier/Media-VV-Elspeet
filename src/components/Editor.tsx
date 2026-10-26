@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { canShareFiles, downloadCanvas, exportName, shareCanvas } from '../export';
 import { fontsReady, loadImage, loadLogo, renderTemplate } from '../render/render';
 import { clearDraft, loadDraft, saveDraft } from '../storage';
@@ -6,7 +6,7 @@ import { baseDesign, type Design, type FieldValue, type ImageValue, type Templat
 import { DesignPanel } from './DesignPanel';
 import { FieldInput } from './FieldInput';
 import { FullscreenViewer } from './FullscreenViewer';
-import { SheetHandle } from './SheetHandle';
+import { SheetHandle, type SheetState } from './SheetHandle';
 
 type Tab = 'inhoud' | 'fotos' | 'ontwerp';
 
@@ -23,8 +23,28 @@ export function Editor({ tpl, onBack }: { tpl: TemplateDef; onBack: () => void }
   const [tab, setTab] = useState<Tab>('inhoud');
   const [status, setStatus] = useState('');
   const [fullscreen, setFullscreen] = useState(false);
-  const [expanded, setExpanded] = useState(false);
+  const [sheet, setSheet] = useState<SheetState>('half');
   const previewRef = useRef<HTMLDivElement>(null);
+  const editorRef = useRef<HTMLDivElement>(null);
+  const [heights, setHeights] = useState<Record<SheetState, number> | null>(null);
+
+  // Hoogtes van het voorbeeld per stand berekenen (en bijwerken bij draaien/resize).
+  useLayoutEffect(() => {
+    const ed = editorRef.current;
+    if (!ed) return;
+    const measure = () => {
+      if (window.innerWidth >= 900) return setHeights(null); // brede layout: naast elkaar, geen greep
+      const h = (sel: string) => (ed.querySelector(sel) as HTMLElement | null)?.offsetHeight ?? 0;
+      const handle = ed.querySelector('.sheet-handle');
+      const overlap = handle ? -parseFloat(getComputedStyle(handle).marginTop) || 0 : 0; // greep schuift iets over het voorbeeld
+      const full = ed.clientHeight - h('.bar') - h('.sheet-handle') - h('.export-bar') + overlap;
+      setHeights({ input: 0, half: Math.round(Math.max(220, ed.clientHeight * 0.4)), preview: Math.max(0, full) });
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(ed);
+    return () => ro.disconnect();
+  }, []);
   const shareable = useMemo(canShareFiles, []);
 
   const imageFields = tpl.fields.filter((f) => f.type === 'image');
@@ -118,7 +138,7 @@ export function Editor({ tpl, onBack }: { tpl: TemplateDef; onBack: () => void }
   }
 
   return (
-    <div className="editor">
+    <div className={`editor sheet-${sheet}`} ref={editorRef}>
       <header className="bar">
         <button className="icon-btn" onClick={onBack} aria-label="Terug">
           ←
@@ -131,25 +151,30 @@ export function Editor({ tpl, onBack }: { tpl: TemplateDef; onBack: () => void }
         </button>
       </header>
 
-      <div className={`preview ${expanded ? 'collapsed' : ''}`} ref={previewRef} aria-hidden={expanded}>
+      <div
+        className="preview"
+        ref={previewRef}
+        aria-hidden={sheet === 'input'}
+        style={heights ? { height: heights[sheet], minHeight: 0 } : undefined}
+      >
         <canvas
           ref={canvasRef}
           className={`canvas canvas-${design.format}`}
           onClick={() => ready && setFullscreen(true)}
-          title="Tik om op volledig scherm te bekijken"
+          title="Tik om in te zoomen"
         />
         {!ready && <div className="preview-loading">Laden…</div>}
-        {ready && (
-          <button className="preview-expand" onClick={() => setFullscreen(true)} aria-label="Volledig scherm">
-            ⛶
-          </button>
-        )}
       </div>
       {fullscreen && canvasRef.current && (
         <FullscreenViewer canvas={canvasRef.current} onClose={() => setFullscreen(false)} />
       )}
 
-      <SheetHandle expanded={expanded} onChange={setExpanded} previewRef={previewRef} />
+      <SheetHandle
+        state={sheet}
+        onChange={setSheet}
+        previewRef={previewRef}
+        heights={heights ?? { input: 0, half: 0, preview: 0 }}
+      />
 
       <nav className="tabs">
         <button className={tab === 'inhoud' ? 'active' : ''} onClick={() => setTab('inhoud')}>

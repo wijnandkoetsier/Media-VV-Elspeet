@@ -32,11 +32,12 @@ Dubbele uploads worden herkend en niet twee keer opgeslagen.
 
 Ingevulde gegevens worden automatisch op het toestel bewaard per template (knop **Reset** wist ze).
 
-**Meer ruimte voor invoer:** veeg de greep boven de tabbladen omhoog om de invoervelden over het hele scherm te tonen,
-en omlaag om het voorbeeld terug te halen. Tikken op de greep wisselt ook.
+**Schermindeling:** met de greep tussen voorbeeld en invoer wissel je tussen drie standen:
+veeg **omlaag** voor een groot voorbeeld over het hele scherm, **omhoog** terug naar half/half, en nog eens
+**omhoog** voor de invoervelden over het hele scherm. Tikken op de greep wisselt tussen half en invoer.
 
-**Volledig scherm:** tik op het voorbeeld (of op ⛶) om de creatie schermvullend te bekijken. Knijp, tik twee keer
-of gebruik + / − om in te zoomen (tot 600%), sleep om te verschuiven. Sluiten met ✕ of de terugknop.
+**Inzoomen:** tik op het voorbeeld om het schermvullend te bekijken. Knijp, tik twee keer of gebruik + / −
+om in te zoomen (tot 600%), sleep om te verschuiven. Sluiten met ✕ of de terugknop.
 
 **Exporteren:** op de telefoon opent *Delen / opslaan* het deelmenu (Opslaan in Foto's, Instagram, WhatsApp…).
 *Download PNG* slaat het bestand direct op.
