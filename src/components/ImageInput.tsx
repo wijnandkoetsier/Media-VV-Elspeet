@@ -54,7 +54,7 @@ export function ImageInput({ field, value, onChange }: Props) {
       <span className="label">{field.label}</span>
       {field.hint && <span className="hint">{field.hint}</span>}
       <div className="image-row">
-        <div className={`thumb ${field.alpha ? 'thumb-alpha' : ''} ${value?.original ? 'thumb-cutout' : ''}`}>
+        <div className={`thumb ${field.alpha ? 'thumb-alpha' : ''} ${value?.src.startsWith('data:image/png') ? 'thumb-cutout' : ''}`}>
           {value ? <img src={value.src} alt="" /> : <span>Geen</span>}
         </div>
         <div className="image-actions">
