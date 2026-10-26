@@ -576,3 +576,28 @@ input[type='range'] {
 .panel > * {
   flex-shrink: 0;
 }
+
+.bg-remove {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.btn-magic {
+  background: linear-gradient(135deg, #2a2a2a, #1c1c1c);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn:disabled {
+  opacity: 0.7;
+}
+
+/* Ruitjespatroon achter een foto zonder achtergrond */
+.thumb-cutout {
+  background: repeating-conic-gradient(#3a3a3a 0 25%, #2a2a2a 0 50%) 0 0 / 14px 14px;
+}
+
+.thumb-cutout img {
+  object-fit: contain;
+}

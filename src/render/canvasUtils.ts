@@ -144,7 +144,7 @@ export function drawCover(
   h: number,
   iv?: Pick<ImageValue, 'zoom' | 'x' | 'y'> | null,
 ) {
-  const zoom = Math.max(1, iv?.zoom ?? 1);
+  const zoom = Math.max(0.2, iv?.zoom ?? 1);
   const fx = iv?.x ?? 0.5;
   const fy = iv?.y ?? 0.5;
   const scale = Math.max(w / image.naturalWidth, h / image.naturalHeight) * zoom;
@@ -204,14 +204,14 @@ export function patternBackground(rc: RenderContext) {
  * `fade` bepaalt of de laag onderaan sterker is (voor tekst onderin).
  */
 export function background(rc: RenderContext, key: string, iv: ImageValue | null, fade: 'bottom' | 'even' = 'bottom') {
-  const { ctx, W, H, design, pal } = rc;
+  const { ctx, W, H, design } = rc;
   const image = rc.images[key];
   if (!image) {
     patternBackground(rc);
     return false;
   }
-  ctx.fillStyle = pal.bg2;
-  ctx.fillRect(0, 0, W, H);
+  // Clubachtergrond eronder: zichtbaar bij uitzoomen of een foto zonder achtergrond.
+  patternBackground(rc);
   drawCover(ctx, image, 0, 0, W, H, iv);
   const o = design.overlay;
   if (fade === 'even') {

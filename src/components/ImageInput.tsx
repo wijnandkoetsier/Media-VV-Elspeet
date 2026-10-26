@@ -1,5 +1,6 @@
 import { useId, useState } from 'react';
 import type { ImageField, ImageValue } from '../templates/types';
+import { removeBackground } from '../bgremove';
 import { fileToDataUrl } from '../upload';
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 export function ImageInput({ field, value, onChange }: Props) {
   const id = useId();
   const [busy, setBusy] = useState(false);
+  const [removing, setRemoving] = useState(false);
   const [error, setError] = useState('');
 
   async function onFile(e: React.ChangeEvent<HTMLInputElement>) {
@@ -31,12 +33,28 @@ export function ImageInput({ field, value, onChange }: Props) {
 
   const set = (patch: Partial<ImageValue>) => value && onChange({ ...value, ...patch });
 
+  async function onRemoveBackground() {
+    if (!value) return;
+    setRemoving(true);
+    setError('');
+    try {
+      const src = await removeBackground(value.src);
+      onChange({ ...value, src, original: value.src });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Achtergrond verwijderen mislukt');
+    } finally {
+      setRemoving(false);
+    }
+  }
+
+  const restore = () => value?.original && onChange({ ...value, src: value.original, original: undefined });
+
   return (
     <div className="field image-field">
       <span className="label">{field.label}</span>
       {field.hint && <span className="hint">{field.hint}</span>}
       <div className="image-row">
-        <div className={`thumb ${field.alpha ? 'thumb-alpha' : ''}`}>
+        <div className={`thumb ${field.alpha ? 'thumb-alpha' : ''} ${value?.original ? 'thumb-cutout' : ''}`}>
           {value ? <img src={value.src} alt="" /> : <span>Geen</span>}
         </div>
         <div className="image-actions">
@@ -51,10 +69,32 @@ export function ImageInput({ field, value, onChange }: Props) {
           )}
         </div>
       </div>
+      {value && !field.alpha && (
+        <div className="bg-remove">
+          {value.original ? (
+            <button className="btn btn-ghost" onClick={restore}>
+              ↺ Achtergrond terugzetten
+            </button>
+          ) : (
+            <button className="btn btn-magic" onClick={onRemoveBackground} disabled={removing}>
+              {removing ? 'Achtergrond verwijderen…' : '✨ Achtergrond verwijderen'}
+            </button>
+          )}
+          {removing && <span className="hint">De eerste keer duurt dit even (model laden).</span>}
+        </div>
+      )}
       {error && <p className="error">{error}</p>}
       {value && !field.alpha && (
         <div className="sliders">
-          <Slider label="Zoom" min={1} max={3} step={0.01} value={value.zoom} onChange={(zoom) => set({ zoom })} />
+          <Slider
+            label={`Zoom ${value.zoom.toFixed(2).replace('.', ',')}×`}
+            min={0.3}
+            max={3}
+            step={0.01}
+            value={value.zoom}
+            onChange={(zoom) => set({ zoom: Math.abs(zoom - 1) < 0.03 ? 1 : zoom })}
+          />
+          <span className="hint">Links = kleiner (uitzoomen), rechts = groter</span>
           <Slider label="Links ↔ rechts" min={0} max={1} step={0.01} value={value.x} onChange={(x) => set({ x })} />
           <Slider label="Boven ↕ onder" min={0} max={1} step={0.01} value={value.y} onChange={(y) => set({ y })} />
         </div>

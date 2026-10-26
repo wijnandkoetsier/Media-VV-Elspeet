@@ -78,10 +78,15 @@ export const pupil: TemplateDef = {
     roundRect(ctx, px, py, pw, ph, radius);
     ctx.clip();
     const photo = rc.images.foto;
+    ctx.fillStyle = pal.bg2;
+    ctx.fillRect(px, py, pw, ph);
+    // Subtiele banen achter een uitgeknipte of uitgezoomde foto
+    ctx.globalAlpha = 0.06;
+    ctx.fillStyle = pal.fg;
+    for (let x = px + pw / 9; x < px + pw; x += (pw / 9) * 2) ctx.fillRect(x, py, pw / 9, ph);
+    ctx.globalAlpha = 1;
     if (photo) drawCover(ctx, photo, px, py, pw, ph, img(d, 'foto'));
     else {
-      ctx.fillStyle = pal.bg2;
-      ctx.fillRect(px, py, pw, ph);
       text(ctx, 'Upload een foto', px + pw / 2, py + ph / 2, {
         size: W * 0.04,
         color: pal.muted,

@@ -49,6 +49,8 @@ export const nieuws: TemplateDef = {
     ctx.clip();
     const photo = rc.images.foto;
     if (photo) {
+      ctx.fillStyle = pal.bg2;
+      ctx.fillRect(0, 0, W, photoH);
       drawCover(ctx, photo, 0, 0, W, photoH, img(d, 'foto'));
       const g = ctx.createLinearGradient(0, 0, 0, photoH * 0.4);
       g.addColorStop(0, `rgba(0,0,0,${design.overlay * 0.6})`);
