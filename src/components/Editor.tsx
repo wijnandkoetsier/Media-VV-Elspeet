@@ -6,6 +6,7 @@ import { baseDesign, type Design, type FieldValue, type ImageValue, type Templat
 import { DesignPanel } from './DesignPanel';
 import { FieldInput } from './FieldInput';
 import { FullscreenViewer } from './FullscreenViewer';
+import { SheetHandle } from './SheetHandle';
 
 type Tab = 'inhoud' | 'fotos' | 'ontwerp';
 
@@ -22,6 +23,8 @@ export function Editor({ tpl, onBack }: { tpl: TemplateDef; onBack: () => void }
   const [tab, setTab] = useState<Tab>('inhoud');
   const [status, setStatus] = useState('');
   const [fullscreen, setFullscreen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const previewRef = useRef<HTMLDivElement>(null);
   const shareable = useMemo(canShareFiles, []);
 
   const imageFields = tpl.fields.filter((f) => f.type === 'image');
@@ -128,7 +131,7 @@ export function Editor({ tpl, onBack }: { tpl: TemplateDef; onBack: () => void }
         </button>
       </header>
 
-      <div className="preview">
+      <div className={`preview ${expanded ? 'collapsed' : ''}`} ref={previewRef} aria-hidden={expanded}>
         <canvas
           ref={canvasRef}
           className={`canvas canvas-${design.format}`}
@@ -145,6 +148,8 @@ export function Editor({ tpl, onBack }: { tpl: TemplateDef; onBack: () => void }
       {fullscreen && canvasRef.current && (
         <FullscreenViewer canvas={canvasRef.current} onClose={() => setFullscreen(false)} />
       )}
+
+      <SheetHandle expanded={expanded} onChange={setExpanded} previewRef={previewRef} />
 
       <nav className="tabs">
         <button className={tab === 'inhoud' ? 'active' : ''} onClick={() => setTab('inhoud')}>
