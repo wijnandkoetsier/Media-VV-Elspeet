@@ -43,3 +43,25 @@ export async function downloadCanvas(canvas: HTMLCanvasElement, name: string) {
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 10_000);
 }
+
+/** Meerdere afbeeldingen (carrousel) in één keer delen; Instagram maakt er dan een carrousel van. */
+export async function shareCanvases(canvases: HTMLCanvasElement[], names: string[]): Promise<'shared' | 'cancelled'> {
+  const files = await Promise.all(
+    canvases.map(async (c, i) => new File([await toBlob(c)], names[i], { type: 'image/png' })),
+  );
+  try {
+    await navigator.share({ files, title: 'Media VV Elspeet' });
+    return 'shared';
+  } catch (e) {
+    if (e instanceof DOMException && e.name === 'AbortError') return 'cancelled';
+    throw e;
+  }
+}
+
+export async function downloadCanvases(canvases: HTMLCanvasElement[], names: string[]) {
+  for (let i = 0; i < canvases.length; i++) {
+    await downloadCanvas(canvases[i], names[i]);
+    // Korte pauze: sommige browsers blokkeren anders snel opeenvolgende downloads.
+    if (i < canvases.length - 1) await new Promise((r) => setTimeout(r, 400));
+  }
+}
