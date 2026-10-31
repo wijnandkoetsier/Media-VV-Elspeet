@@ -1,4 +1,4 @@
-import type { FieldDef, FieldValue } from '../templates/types';
+import type { FieldDef, FieldValue, ListItem } from '../templates/types';
 import { ImageInput } from './ImageInput';
 import { ListInput } from './ListInput';
 
@@ -19,7 +19,7 @@ export function FieldInput({ field, value, onChange }: Props) {
         />
       );
     case 'list':
-      return <ListInput field={field} value={Array.isArray(value) ? value : []} onChange={onChange} />;
+      return <ListInput field={field} value={Array.isArray(value) ? (value as ListItem[]) : []} onChange={onChange} />;
     case 'select':
       return (
         <label className="field">

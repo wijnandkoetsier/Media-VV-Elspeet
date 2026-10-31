@@ -11,7 +11,7 @@ Kies een template, vul de gegevens in, upload foto's, pas het ontwerp aan en exp
 | **Pupil van de week** | foto, naam, team, wedstrijd, datum, sponsor |
 | **Uitslagen** | lijst met wedstrijden + scores, datum, achtergrondfoto |
 | **Programma** | lijst met tijd, thuis, uit, extra info (veld), datum |
-| **Sponsoring** | label, titel, sponsorlogo, naam, tekst, website, achtergrondfoto |
+| **Sponsoring** | carrousel: per sponsor een eigen afbeelding (logo/foto in vierkant vak, naam, tekst, website); titel, subtitel en achtergrondfoto gedeeld |
 | **Nieuws** | foto, label, kop, intro |
 | **Agenda** | lijst met datum, activiteit, tijd, locatie |
 
@@ -24,6 +24,11 @@ Bij foto's kun je in- en uitzoomen (0,3× tot 3×) en de uitsnede verschuiven.
 Met **Achtergrond verwijderen** wordt de achtergrond rond personen weggehaald (werkt op het toestel zelf
 met MediaPipe; het model van ±16 MB wordt de eerste keer gedownload en daarna bewaard).
 Met **Achtergrond terugzetten** krijg je de originele foto terug.
+**Carrousel (Sponsoring):** voeg met **+ Sponsor** meerdere sponsors toe; elke sponsor wordt een aparte afbeelding.
+Blader met ‹ › op het voorbeeld of de knoppen boven de velden; dupliceren, verplaatsen en verwijderen kan ook.
+*Delen* stuurt alle afbeeldingen in één keer door (Instagram maakt er een carrousel van), *Download* slaat ze allemaal op.
+Bij het sponsorlogo kies je **Passend** (hele logo zichtbaar) of **Vullend** (foto vult het vak) en kun je zoomen en verschuiven.
+
 **Galerij:** elke geüploade afbeelding (en elke foto waarvan de achtergrond is verwijderd) wordt automatisch
 bewaard in de galerij op het toestel. Bij elk afbeeldingsveld kies je via **🖼️ Galerij** snel een eerdere afbeelding;
 bij logo-velden staan transparante afbeeldingen meteen bovenaan. Via **Galerij** op het startscherm kun je meerdere

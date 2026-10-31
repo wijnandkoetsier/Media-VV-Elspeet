@@ -160,6 +160,34 @@ export function drawCover(
   ctx.restore();
 }
 
+/**
+ * Tekent een afbeelding passend in het vak (niets afgesneden bij zoom 1), met zoom en focuspunt.
+ * Handig voor logo's: uitzoomen maakt kleiner, inzoomen groter, x/y verschuift.
+ */
+export function drawFit(
+  ctx: Ctx,
+  image: HTMLImageElement,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  iv?: Pick<ImageValue, 'zoom' | 'x' | 'y'> | null,
+) {
+  const zoom = Math.max(0.2, iv?.zoom ?? 1);
+  const scale = Math.min(w / image.naturalWidth, h / image.naturalHeight) * zoom;
+  const dw = image.naturalWidth * scale;
+  const dh = image.naturalHeight * scale;
+  // Focuspunt verschuift binnen de ruimte die er is (ook als de afbeelding groter is dan het vak).
+  const dx = x + (w - dw) * (iv?.x ?? 0.5);
+  const dy = y + (h - dh) * (iv?.y ?? 0.5);
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(x, y, w, h);
+  ctx.clip();
+  ctx.drawImage(image, dx, dy, dw, dh);
+  ctx.restore();
+}
+
 /** Tekent een afbeelding passend (zonder bijsnijden) gecentreerd in het vak. */
 export function drawContain(ctx: Ctx, image: HTMLImageElement, x: number, y: number, w: number, h: number) {
   const scale = Math.min(w / image.naturalWidth, h / image.naturalHeight);

@@ -11,6 +11,9 @@ interface Props {
   onChange: (v: ImageValue | null) => void;
 }
 
+/** Zonder keuze: transparante afbeeldingen (logo's) passend, foto's vullend. */
+export const autoFit = (v: ImageValue) => (v.src.startsWith('data:image/png') ? 'contain' : 'cover');
+
 export function ImageInput({ field, value, onChange }: Props) {
   const id = useId();
   const [busy, setBusy] = useState(false);
@@ -25,7 +28,7 @@ export function ImageInput({ field, value, onChange }: Props) {
     setBusy(true);
     setError('');
     try {
-      const src = await fileToDataUrl(file, !!field.alpha);
+      const src = await fileToDataUrl(file, !!field.alpha && !field.adjustable);
       onChange({ src, zoom: 1, x: 0.5, y: 0.5 });
       addToGallery(src, file.name);
     } catch (err) {
@@ -102,8 +105,27 @@ export function ImageInput({ field, value, onChange }: Props) {
           }}
         />
       )}
-      {value && !field.alpha && (
+      {value && (!field.alpha || field.adjustable) && (
         <div className="sliders">
+          {field.adjustable && (
+            <div className="fit-toggle segmented">
+              {(
+                [
+                  ['contain', 'Passend', 'hele afbeelding'],
+                  ['cover', 'Vullend', 'vak gevuld'],
+                ] as const
+              ).map(([fit, label, sub]) => (
+                <button
+                  key={fit}
+                  className={(value.fit ?? autoFit(value)) === fit ? 'active' : ''}
+                  onClick={() => set({ fit, zoom: 1, x: 0.5, y: 0.5 })}
+                >
+                  {label}
+                  <small>{sub}</small>
+                </button>
+              ))}
+            </div>
+          )}
           <Slider
             label={`Zoom ${value.zoom.toFixed(2).replace('.', ',')}×`}
             min={0.3}

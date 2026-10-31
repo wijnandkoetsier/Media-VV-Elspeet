@@ -11,6 +11,8 @@ export interface ImageValue {
   y: number;
   /** Origineel van vóór het verwijderen van de achtergrond, om terug te kunnen zetten. */
   original?: string;
+  /** Passend (hele afbeelding zichtbaar) of vullend (vak gevuld). Leeg = automatisch. */
+  fit?: 'contain' | 'cover';
 }
 
 interface BaseField {
@@ -33,6 +35,8 @@ export interface ImageField extends BaseField {
   type: 'image';
   /** Bewaar transparantie (logo's) i.p.v. JPEG. */
   alpha?: boolean;
+  /** Logo óf foto: zoom/verschuiven tonen en kiezen tussen passend en vullend. */
+  adjustable?: boolean;
 }
 
 export interface ListColumn {
@@ -54,7 +58,9 @@ export interface ListField extends BaseField {
 export type FieldDef = TextField | SelectField | ImageField | ListField;
 
 export type ListItem = Record<string, string>;
-export type FieldValue = string | ImageValue | ListItem[] | null;
+/** Eén dia van een carrousel: eigen tekst- en afbeeldingsvelden. */
+export type SlideItem = Record<string, string | ImageValue | null>;
+export type FieldValue = string | ImageValue | ListItem[] | SlideItem[] | null;
 export type TemplateData = Record<string, FieldValue>;
 
 export interface Design {
@@ -87,6 +93,13 @@ export interface TemplateDef {
   fields: FieldDef[];
   defaults: TemplateData;
   defaultDesign?: Partial<Design>;
+  /**
+   * Carrousel: `data[key]` is een lijst dia's met elk deze velden. Elke dia wordt een eigen afbeelding;
+   * bij tekenen worden de velden van de dia samengevoegd met de gewone velden.
+   */
+  slides?: { key: string; label: string; fields: FieldDef[]; max: number; create: () => SlideItem };
+  /** Zet een concept van een oudere versie om naar de huidige velden. */
+  migrate?: (data: TemplateData) => TemplateData;
   draw: (rc: RenderContext, data: TemplateData) => void;
 }
 
@@ -105,7 +118,11 @@ export const str = (d: TemplateData, k: string): string => {
 };
 export const list = (d: TemplateData, k: string): ListItem[] => {
   const v = d[k];
-  return Array.isArray(v) ? v : [];
+  return Array.isArray(v) ? (v as ListItem[]) : [];
+};
+export const slides = (d: TemplateData, k: string): SlideItem[] => {
+  const v = d[k];
+  return Array.isArray(v) ? (v as SlideItem[]) : [];
 };
 export const img = (d: TemplateData, k: string): ImageValue | null => {
   const v = d[k];
